@@ -1,1 +1,2 @@
-# SQL_Portfolio_project
+# SQL Portfolio Project
+### Data Exploration (Covid Data Set) 
