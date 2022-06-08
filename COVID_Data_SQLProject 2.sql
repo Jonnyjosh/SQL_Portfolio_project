@@ -36,7 +36,7 @@ From SQLPortfolioProjects..Covid_Data_Set_D
 Group by location, population
 order by CovidperPopulation desc 
 
--- Veiwing, by comparing Highest Death Rate per Population
+-- VIEWING BY COMPARING HIGHEST DEATH RATE PER POPULATION 
 
 Select location, MAX(cast(total_deaths as int)) as TotalNumOfDeaths
 From SQLPortfolioProjects..Covid_Data_Set_D
