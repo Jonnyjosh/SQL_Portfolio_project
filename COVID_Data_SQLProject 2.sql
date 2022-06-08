@@ -1,38 +1,35 @@
-
 Select *
 From SQLPortfolioProjects..Covid_Data_Set_D
 where continent is not null
 order by 3,4
 
---Select *
---From SQLPortfolioProjects..Covid_Data_Set_V
+Select *
+From SQLPortfolioProjects..Covid_Data_Set_V
 
---Selecting Data that will be used
+
+--SELECTING DATA THAT WILL BE ANALYZED 
 
 Select location, date,total_cases, new_cases, total_deaths, population
 From SQLPortfolioProjects..Covid_Data_Set_D
 order by 1,2
 
-
--- Comparing Total Cases and Total Deaths (Comparing those who had covid and later died)
--- Nigeria as at 30th of April, 2021 had 1.24% death rate.
+--COMPARING TOTAL CASES AND TOTAL DEATHS (viewing those who had covid and later died)
+-- INSIGHTS: Nigeria as at 30th of April, 2021 had 1.24% death rate.
 
 Select location, date, total_cases, total_deaths, (total_deaths/total_cases)*100 as PercentageofDeath
 From SQLPortfolioProjects..Covid_Data_Set_D
 where location like '%Nigeria%'
 order by 1,2
 
-
---Comparing Total cases and Population
---Percentage of Nigeria's Population with Covid
+--COMPARING TOTAL CASES AND POPULATION 
+--PERCENTAGE OF NIGERIA'S TOTAL CASES AND POPULATION 
 
 Select location, date, population, total_cases, (total_cases/population)*100 as CovidperPopulation
 From SQLPortfolioProjects..Covid_Data_Set_D
 Where location like '%Nigeria%'
 order by 1,2
 
-
---Viewing Countries with most Infection Rate and thier Population
+--VIEWING COUNTRIES WITH MOST INFECTION RATE AND THEIR POPULATION 
 
 Select location, population, Max(total_cases) as MostInfectionRecorded, Max((total_cases/population))*100 as CovidperPopulation
 From SQLPortfolioProjects..Covid_Data_Set_D
@@ -47,7 +44,7 @@ where continent is not null
 Group by location
 order by TotalNumOfDeaths desc 
 
---Veiwing, by comparing Highest Death Rate per Population per continent
+--VIEWING BY COMPARING HIGHEST DAETH RATE PER POPULATION PER CONTINENT 
 
 Select continent, MAX(cast(total_deaths as int)) as TotalNumOfDeaths
 From SQLPortfolioProjects..Covid_Data_Set_D
@@ -63,9 +60,7 @@ where continent is  null
 Group by location
 order by TotalNumOfDeaths desc
 
-
-
---Viewing, World Data Sets. 
+--VIEWING WORLD DATA 
 
 Select date, SUM(new_cases) as total_cases, SUM(cast(new_deaths as int)) as total_deaths, SUM(cast(new_deaths as int))/SUM
 (new_cases)*100 as percentageOfDeath
@@ -74,8 +69,7 @@ where continent is not null
 group by date
 order by 1,2
 
---Removing the Date Filter
-
+--REMOVING THE DATA FILTER
 
 Select SUM(new_cases) as total_cases, SUM(cast(new_deaths as int)) as total_deaths, 
 SUM(cast(new_deaths as int))/SUM
@@ -84,7 +78,6 @@ From SQLPortfolioProjects..Covid_Data_Set_D
 where continent is not null
 --group by date
 order by 1,2
-
 
 -- JOINING BOTH COVID DEATHS AND VACCINATIONS TABLES
 
@@ -112,7 +105,6 @@ where D.continent is not null
 )
 select *, (ContiniuingPeopleVaccinated/Population)*100
 from PopuVsVaccin
-
 
 --TEMP TABLE
 
@@ -163,9 +155,6 @@ Join SQLPortfolioProjects..Covid_Data_Set_V V
 select *, (ContiniuingPeopleVaccinated/Population)*100
 from #PercentofPopulationVaccinated
 
-
-
-
 --CREATING VIEW FOR LATER VISUALIZATION
 
 Create view PercentofPopulationVaccinated as
@@ -178,7 +167,3 @@ Join SQLPortfolioProjects..Covid_Data_Set_V V
 	and D.date = V.date 
 where D.continent is not null
 --order by 2,3
-
-
-select * 
-from PercentofPopulationVaccinated
